@@ -13,10 +13,10 @@ function initializeItems() {
     const itemHeight = 80;
     const containerWidth = itemsContainer.offsetWidth;
     const containerHeight = itemsContainer.offsetHeight;
-    const gap = 20;
+    const gap = 10;
     
-    // Calculate grid dimensions
-    const itemsPerRow = Math.floor((containerWidth + gap) / (itemWidth + gap));
+    // Calculate grid dimensions - 5 items per row for 25 items
+    const itemsPerRow = 5;
     
     items.forEach((item, index) => {
         const row = Math.floor(index / itemsPerRow);
@@ -25,6 +25,7 @@ function initializeItems() {
         const x = col * (itemWidth + gap) + gap;
         const y = row * (itemHeight + gap) + gap;
         
+        item.style.position = 'absolute';
         item.style.left = x + 'px';
         item.style.top = y + 'px';
     });
@@ -87,9 +88,12 @@ items.forEach(item => {
     item.addEventListener('mousedown', handleMouseDown);
 });
 
-// Initialize item positions when page loads
-window.addEventListener('load', initializeItems);
+// Initialize item positions when DOM is ready
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initializeItems);
+} else {
+    initializeItems();
+}
 
 // Re-initialize on window resize
 window.addEventListener('resize', initializeItems);
-
