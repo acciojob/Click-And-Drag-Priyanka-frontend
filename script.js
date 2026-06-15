@@ -1,99 +1,61 @@
-// Get container and all items
-const itemsContainer = document.querySelector('.items');
-const items = document.querySelectorAll('.item');
+const container = document.getElementById("container");
+const cubes = document.querySelectorAll(".cube");
 
-// Variables to track dragging state
-let selectedItem = null;
+let activeCube = null;
 let offsetX = 0;
 let offsetY = 0;
 
-// Initialize item positions in a grid
-function initializeItems() {
-    const itemWidth = 80;
-    const itemHeight = 80;
-    const containerWidth = itemsContainer.offsetWidth;
-    const containerHeight = itemsContainer.offsetHeight;
-    const gap = 10;
-    
-    // Calculate grid dimensions - 5 items per row for 25 items
-    const itemsPerRow = 5;
-    
-    items.forEach((item, index) => {
-        const row = Math.floor(index / itemsPerRow);
-        const col = index % itemsPerRow;
-        
-        const x = col * (itemWidth + gap) + gap;
-        const y = row * (itemHeight + gap) + gap;
-        
-        item.style.position = 'absolute';
-        item.style.left = x + 'px';
-        item.style.top = y + 'px';
+cubes.forEach((cube) => {
+
+    cube.addEventListener("mousedown", (e) => {
+        activeCube = cube;
+
+        const cubeRect = cube.getBoundingClientRect();
+
+        offsetX = e.clientX - cubeRect.left;
+        offsetY = e.clientY - cubeRect.top;
+
+        cube.classList.add("dragging");
+
+        // Convert grid item to absolute position
+        const containerRect = container.getBoundingClientRect();
+
+        cube.style.position = "absolute";
+        cube.style.left =
+            cubeRect.left - containerRect.left + "px";
+        cube.style.top =
+            cubeRect.top - containerRect.top + "px";
     });
-}
-
-// Handle mouse down on item
-function handleMouseDown(e) {
-    if (e.button !== 0) return; // Only left mouse button
-    
-    selectedItem = this;
-    selectedItem.classList.add('dragging');
-    
-    // Get the position of the item and mouse
-    const rect = selectedItem.getBoundingClientRect();
-    const containerRect = itemsContainer.getBoundingClientRect();
-    
-    offsetX = e.clientX - rect.left;
-    offsetY = e.clientY - rect.top;
-    
-    document.addEventListener('mousemove', handleMouseMove);
-    document.addEventListener('mouseup', handleMouseUp);
-}
-
-// Handle mouse move
-function handleMouseMove(e) {
-    if (!selectedItem) return;
-    
-    const containerRect = itemsContainer.getBoundingClientRect();
-    
-    // Calculate new position
-    let newX = e.clientX - containerRect.left - offsetX;
-    let newY = e.clientY - containerRect.top - offsetY;
-    
-    // Get item dimensions
-    const itemWidth = selectedItem.offsetWidth;
-    const itemHeight = selectedItem.offsetHeight;
-    
-    // Apply boundary constraints
-    newX = Math.max(0, Math.min(newX, containerRect.width - itemWidth));
-    newY = Math.max(0, Math.min(newY, containerRect.height - itemHeight));
-    
-    // Update item position
-    selectedItem.style.left = newX + 'px';
-    selectedItem.style.top = newY + 'px';
-}
-
-// Handle mouse up
-function handleMouseUp(e) {
-    if (selectedItem) {
-        selectedItem.classList.remove('dragging');
-        selectedItem = null;
-    }
-    
-    document.removeEventListener('mousemove', handleMouseMove);
-    document.removeEventListener('mouseup', handleMouseUp);
-}
-
-// Attach event listeners to each item
-items.forEach(item => {
-    item.addEventListener('mousedown', handleMouseDown);
 });
 
-// Initialize item positions when DOM is ready
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initializeItems);
-} else {
-    initializeItems();
-}
+document.addEventListener("mousemove", (e) => {
+    if (!activeCube) return;
 
-// Re-initialize on window resize
-window.addEventListener('resize', initializeItems);
+    const containerRect = container.getBoundingClientRect();
+
+    let newLeft =
+        e.clientX - containerRect.left - offsetX;
+
+    let newTop =
+        e.clientY - containerRect.top - offsetY;
+
+    // Boundary constraints
+    const maxLeft =
+        container.clientWidth - activeCube.offsetWidth;
+
+    const maxTop =
+        container.clientHeight - activeCube.offsetHeight;
+
+    newLeft = Math.max(0, Math.min(newLeft, maxLeft));
+    newTop = Math.max(0, Math.min(newTop, maxTop));
+
+    activeCube.style.left = `${newLeft}px`;
+    activeCube.style.top = `${newTop}px`;
+});
+
+document.addEventListener("mouseup", () => {
+    if (activeCube) {
+        activeCube.classList.remove("dragging");
+        activeCube = null;
+    }
+});

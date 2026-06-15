@@ -1,113 +1,42 @@
 * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
-        html, body {
-            width: 100%;
-            height: 100%;
-            margin: 0;
-            padding: 0;
-        }
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: #f4f4f4;
+    font-family: Arial, sans-serif;
+}
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-start;
-            align-items: center;
-            padding: 20px;
-        }
+.container {
+    width: 700px;
+    height: 500px;
+    border: 3px solid #333;
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(3, 80px);
+    gap: 20px;
+    padding: 20px;
+    align-content: start;
+    background: white;
+}
 
-        h1 {
-            text-align: center;
-            color: white;
-            margin: 20px 0;
-            font-size: 2em;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-        }
+.cube {
+    width: 80px;
+    height: 80px;
+    background: #4caf50;
+    border-radius: 8px;
+    cursor: grab;
+    user-select: none;
+}
 
-        .items {
-            width: 90%;
-            max-width: 1000px;
-            min-height: 500px;
-            height: 500px;
-            background-color: rgba(255, 255, 255, 0.95);
-            border-radius: 15px;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            border: 3px solid rgba(255, 255, 255, 0.5);
-            flex-shrink: 0;
-        }
-
-        .item {
-            width: 80px;
-            height: 80px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-radius: 10px;
-            position: absolute;
-            cursor: grab;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-weight: bold;
-            color: white;
-            font-size: 18px;
-            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
-            user-select: none;
-            left: 10px;
-            top: 10px;
-        }
-
-        .item:hover {
-            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
-            transform: scale(1.05);
-        }
-
-        .item.dragging {
-            cursor: grabbing;
-            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.8);
-            transform: scale(1.1);
-            z-index: 1000;
-        }
-
-        .item1 { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
-        .item2 { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); }
-        .item3 { background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); }
-        .item4 { background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); }
-        .item5 { background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); }
-        .item6 { background: linear-gradient(135deg, #30cfd0 0%, #330867 100%); }
-        .item7 { background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%); }
-        .item8 { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
-        .item9 { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); }
-        .item10 { background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); }
-        .item11 { background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); }
-        .item12 { background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); }
-        .item13 { background: linear-gradient(135deg, #30cfd0 0%, #330867 100%); }
-        .item14 { background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%); }
-        .item15 { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
-        .item16 { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); }
-        .item17 { background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); }
-        .item18 { background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); }
-        .item19 { background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); }
-        .item20 { background: linear-gradient(135deg, #30cfd0 0%, #330867 100%); }
-        .item21 { background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%); }
-        .item22 { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
-        .item23 { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); }
-        .item24 { background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); }
-        .item25 { background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); }
-
-        .info {
-            text-align: center;
-            color: white;
-            margin-top: 20px;
-            font-size: 0.95em;
-            opacity: 0.9;
-        }
-
-        .info p {
-            margin: 5px 0;
-        }
+.cube.dragging {
+    cursor: grabbing;
+    z-index: 1000;
+    opacity: 0.8;
+}
